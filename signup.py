@@ -1,5 +1,6 @@
 import streamlit as st
 from utils import get_db_connection
+import time
 
 def signup_page():
     st.title("Signup Page")
@@ -28,6 +29,7 @@ def signup_page():
                 )
                 conn.commit()
                 st.success("Signup successful! Redirecting to login page...")
+                time.sleep(2)
                 st.rerun()  # Use st.rerun to reload the page or redirect
             except Exception as e:
                 st.error(f"Error during signup: {e}")
