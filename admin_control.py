@@ -58,30 +58,46 @@ def admin_control_page():
 
         # Modify a hotel
         with st.expander("Modify Hotel"):
-            modify_hid = st.number_input("Enter Hotel ID to Modify", min_value=1, step=1)
+            modify_hid = st.number_input("Enter Hotel ID to Modify", min_value=1000, max_value=9999, step=1)
             updated_hname = st.text_input("Updated Hotel Name")
             updated_haddress = st.text_input("Updated Hotel Address")
             updated_star = st.number_input("Updated Star Rating", min_value=1, max_value=5, step=1)
             updated_rating = st.number_input("Updated Rating", min_value=0.0, max_value=5.0, step=0.1)
+
             if st.button("Update Hotel"):
-                cursor.execute(
-                    "UPDATE hotels SET hname=%s, haddress=%s, star=%s, rating=%s WHERE hid=%s",
-                    (updated_hname, updated_haddress, updated_star, updated_rating, modify_hid),
-                )
-                conn.commit()
-                st.success("Hotel updated successfully!")
-                time.sleep(1)
-                st.rerun()
+                # Check if the Hotel ID exists
+                cursor.execute("SELECT * FROM hotels WHERE hid = %s", (modify_hid,))
+                hotel = cursor.fetchone()
+
+                if hotel:  # If the Hotel ID exists
+                    cursor.execute(
+                        "UPDATE hotels SET hname=%s, haddress=%s, star=%s, rating=%s WHERE hid=%s",
+                        (updated_hname, updated_haddress, updated_star, updated_rating, modify_hid),
+                    )
+                    conn.commit()
+                    st.success("Hotel updated successfully!")
+                    time.sleep(1)
+                    st.rerun()
+                else:  # If the Hotel ID does not exist
+                    st.warning("Hotel ID not found. Please enter a valid Hotel ID.")
 
         # Delete a hotel
         with st.expander("Delete Hotel"):
             delete_hid = st.number_input("Enter Hotel ID to Delete", min_value=1, step=1)
+
             if st.button("Delete Hotel"):
-                cursor.execute("DELETE FROM hotels WHERE hid = %s", (delete_hid,))
-                conn.commit()
-                st.success("Hotel deleted successfully!")
-                time.sleep(1)
-                st.rerun()
+                # Check if the Hotel ID exists
+                cursor.execute("SELECT * FROM hotels WHERE hid = %s", (delete_hid,))
+                hotel = cursor.fetchone()
+
+                if hotel:  # If the Hotel ID exists
+                    cursor.execute("DELETE FROM hotels WHERE hid = %s", (delete_hid,))
+                    conn.commit()
+                    st.success("Hotel deleted successfully!")
+                    time.sleep(1)
+                    st.rerun()
+                else:  # If the Hotel ID does not exist
+                    st.warning("Hotel ID not found. Please enter a valid Hotel ID.")
 
     # Rooms Table
     with tabs[1]:
