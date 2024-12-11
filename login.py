@@ -2,7 +2,7 @@ import streamlit as st
 from utils import get_db_connection
 
 def login_page():
-    st.title("Login")
+    st.title("Login 🔑")
 
     # Login form
     role = st.selectbox("Select Role", ["User", "Admin"])

@@ -10,7 +10,7 @@ def home_page():
     # Header layout with a Logout button in the first row, right-aligned
     header_col1, header_col2 = st.columns([4, 1])
     with header_col1:
-        st.title("Hotel Booking System")
+        st.title("Hotel Booking System 🏠")
     with header_col2:
         # Check if the logged-in user is a "User" and show the logout button only for them
         if "role" in st.session_state and st.session_state["role"] == "User":

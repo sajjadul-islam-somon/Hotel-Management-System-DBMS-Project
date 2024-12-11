@@ -4,7 +4,7 @@ import datetime
 
 def book_now_page():
     # Title for the Book Now page
-    st.title("Book a Hotel")
+    st.title("Book a Hotel 🔖")
 
     # Check if the user is logged in
     if "user" not in st.session_state or st.session_state["user"] is None or "uid" not in st.session_state["user"]:

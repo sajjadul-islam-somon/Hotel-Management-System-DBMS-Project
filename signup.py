@@ -3,7 +3,7 @@ from utils import get_db_connection
 import time
 
 def signup_page():
-    st.title("Signup Page")
+    st.title("Signup Page 🔰")
 
     name = st.text_input("Name")
     username = st.text_input("Username")
